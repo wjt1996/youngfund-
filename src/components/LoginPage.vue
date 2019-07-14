@@ -43,7 +43,7 @@
           <div class="am-form-group">
             <label for="user-name" class="col-sm-3 am-form-label">用户名</label>
             <div class="col-sm-9">
-              <input type="email" id="user-name" v-model="register.uName" value="">
+              <input type="email" id="user-name" v-model="register.userName" value="">
             </div>
           </div>
           <div class="am-form-group">
@@ -75,7 +75,7 @@
           <div class="am-form-group">
             <label for="user-phone" class="col-sm-3 am-form-label">联系电话</label>
             <div class="col-sm-9">
-              <input type="email" id="user-phone" v-model="register.phone" value="">
+              <input type="email" id="user-phone" v-model="register.phoneNumber" value="">
             </div>
           </div>
           <div class="am-form-group">
@@ -135,16 +135,16 @@ import qs from 'qs'
         login:[{logName:"",
                 password:""}],
         register:{
-            uName:"",
+            userName:"",
             password:"",
             name:"",
             email:"",
-            phone:"",
+            phoneNumber:"",
             sex:"",
             address:"",
             profession:"",
         },
-        cfpassword
+        cfpassword:""
       }
     },
     methods:{
@@ -172,9 +172,19 @@ import qs from 'qs'
 
                     
 });
-}
-    ,zc:function(){
-        alert(JSON.stringify(this.register));
+},zc:function(){
+        var RegisterD=this.register
+        console.log(JSON.stringify(RegisterD));
+        if(RegisterD.userName==""){alert("用户名不能为空")}
+        else if(RegisterD.password!=this.cfpassword){
+            alert("密码和确认密码不一致");
+        }else{
+            axios.post("http://192.168.137.173:8888/bank/userinfo/insert",RegisterD).then(
+                res=>{
+                    console.log(JSON.stringify(res));
+                }
+            )
+        }
 }
 
     }
