@@ -162,8 +162,8 @@ import qs from 'qs'
                 var Result=res.data;
                 if(Result.flag){
                         alert("登录成功");
-                        localStorage.setItem("userId",Result.userId);
-                        localStorage.setItem("password",Password);
+                        localStorage.setItem("userId",JSON.stringify(Result.data.userId));
+                        localStorage.setItem("password",JSON.stringify(Password));
                         this.$router.push({name: 'UserPage'})
                     }
                     else{
@@ -182,6 +182,11 @@ import qs from 'qs'
             axios.post("http://192.168.137.173:8888/bank/userinfo/insert",RegisterD).then(
                 res=>{
                     console.log(JSON.stringify(res));
+                    if(!res.data.flag){
+                        alert("用户名已存在,请重新输入用户名");
+                    }else{
+                        alert("注册成功！");
+                    }
                 }
             )
         }

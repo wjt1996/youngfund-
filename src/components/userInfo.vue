@@ -14,8 +14,12 @@
       <div class="col-sm-12 col-md-8 col-md-pull-4">
         <form class="am-form am-form-horizontal">
           <div class="am-form-group">
-            <label for="user-name" class="col-sm-3 am-form-label">用户姓名</label>
+            <label for="user-name" class="col-sm-3 am-form-label">用户名</label>
             <label class="col-sm-9">{{username}}</label>
+          </div>
+          <div class="am-form-group">
+            <label for="user-name" class="col-sm-3 am-form-label">真实姓名</label>
+            <label class="col-sm-9">{{truename}}</label>
           </div>
 
           <div class="am-form-group">
@@ -64,22 +68,34 @@ export default {
     name:"userInfo",
     data(){
         return{
-            username:"小红",
+            username:"xiaohong123",
+            truename:"小红",
             email:"123456@qq.com",
             phonenumber:"12345678901",
             registerdate:"2019-07-12",
             deposit:"10000",
             sex:"女",
             address:"浙江杭州XXXXXX",
-            profession:"护士"
-
+            profession:"护士",
+            uid:{'userId':0}
         }
     },
     created(){
-        this.$axios("http://192.168.137.173:8888/bank/userInfo/select/"+localStorage.getItem("userId")).then(
+        var uId=localStorage.getItem("userId");
+        this.uid.userId=uId;
+        axios.post("http://192.168.137.173:8888/bank/userinfo/select",this.uid).then(
             res=>{
                 var Info=res.data;
                 console.log(Info);
+                this.username=Info.userName;
+                this.truename=Info.name;
+                this.email=Info.email;
+                this.phonenumber=Info.phoneNumber;
+                this.registerdate=Info.registerDate;
+                this.deposit=Info.deposit;
+                if(Info.sex=="male"){this.sex="男";}else if(Info.sex=="female"){this.sex="女";}
+                this.address=Info.address;
+                this.profession=Info.profession;
             }
         );
     }
