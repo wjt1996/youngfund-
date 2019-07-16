@@ -160,7 +160,7 @@ import qs from 'qs'
                 if(Result.flag){
                         alert("登录成功");
                         localStorage.setItem("userId",JSON.stringify(Result.data.userId));
-                        localStorage.setItem("password",JSON.stringify(Password));
+                        localStorage.setItem("password",Password);
                         this.$router.push({name: 'UserPage'})
                     }
                     else{

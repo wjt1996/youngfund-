@@ -16,13 +16,13 @@
           <div class="am-form-group">
             <label for="user-name" class="col-sm-3 am-form-label">姓名</label>
             <div class="col-sm-9">
-              <input type="password" id="user-name" placeholder="">
+              <input type="email" id="user-name" v-model="register.name" value="">
             </div>
           </div>
           <div class="am-form-group">
             <label for="user-password" class="col-sm-3 am-form-label">输入原密码</label>
             <div class="col-sm-9">
-              <input type="password" id="user-password"  value="">
+              <input type="password" id="user-password" v-model="oldpassword" value="">
             </div>
           </div>
           <div class="am-form-group">
@@ -34,7 +34,7 @@
           <div class="am-form-group">
             <label for="user-password" class="col-sm-3 am-form-label">确认新密码</label>
             <div class="col-sm-9">
-              <input type="password" id="user-password" value="">
+              <input type="password" id="user-password" v-model="cfpassword" value="">
             </div>
           </div>
 
@@ -48,7 +48,7 @@
           <div class="am-form-group">
             <label for="user-phone" class="col-sm-3 am-form-label">联系电话</label>
             <div class="col-sm-9">
-              <input type="email" id="user-phone" placeholder="">
+              <input type="email" id="user-phone" v-model="register.phoneNumber" value="">
             </div>
           </div>
 
@@ -57,8 +57,8 @@
             <div class="col-sm-9">
               <div class="col-sm-10">
             <form action="" method="get"> 
-                <label><input name="sex" type="radio" value="" />男 </label> 
-                <label><input name="sex" type="radio" value="" />女 </label> 
+                <label><input @click="getSex" name="sex" type="radio" v-model="register.sex" value="male"/>男 </label> 
+                <label><input @click="getSex" name="sex" type="radio" v-model="register.sex" value="female"/>女 </label> 
             </form> 
 
           </div>
@@ -68,20 +68,20 @@
           <div class="am-form-group">
             <label for="user-weibo" class="col-sm-3 am-form-label">联系地址</label>
             <div class="col-sm-9">
-              <input type="email" id="user-weibo" placeholder="">
+              <input type="email" id="user-weibo" v-model="register.address" value="">
             </div>
           </div>
 
           <div class="am-form-group">
             <label for="user-intro" class="col-sm-3 am-form-label">职业</label>
             <div class="col-sm-9">
-              <input type="email" id="user-weibo" placeholder="">
+              <input type="email" id="user-weibo" v-model="register.profession" value="">
             </div>
           </div>
 
           <div class="am-form-group">
             <div class="col-sm-9 col-sm-push-3">
-              <button type="button" class="am-btn am-btn-primary" v-on:click="xg">保存修改</button>
+              <button type="button" class="am-btn am-btn-primary" v-on:click="xg">提交修改</button>
             </div>
               
           </div>
@@ -100,26 +100,63 @@ export default {
                 userId:0,
                 name:"",
                 password:"",
-                name:"",
                 email:"",
                 phoneNumber:"",
                 sex:"",
                 address:"",
                 profession:"",
-        }
+        },
+        cfpassword:"",
+        oldpassword:"",
+        Password:"",
         }
     },
     methods:{
+        getSex(event){
+        var radioSex=event.target.value;
+        this.register.sex=radioSex;
+      },
         xg:function(){
-        var RegisterD=this.register
-        this.register.userId=localStorage.getItem("userId");
-        console.log(JSON.stringify(RegisterD));
+        var RegisterD=this.register;
+        RegisterD.userId=localStorage.getItem("userId");
+        this.Password=localStorage.getItem("password");
+
+        if(this.register.password!=""){
+            if(this.Password!=this.oldpassword){alert("原密码错误，修改失败");}
+            else if(RegisterD.password!=this.cfpassword){alert("密码确认错误，请重新输入");}
+            else if(Tag){
             axios.post("http://192.168.137.173:8888/bank/userinfo/update",RegisterD).then(
                 res=>{
-                    console.log(JSON.stringify(res));
-
+                    alert("修改成功");
+                    localStorage.setItem("password",RegisterD.password);
+                    RegisterD.name="";
+                    RegisterD.password="";
+                    RegisterD.email="";
+                    RegisterD.phoneNumber="";
+                    RegisterD.sex="";
+                    RegisterD.address="";
+                    RegisterD.profession="";
+                    this.oldpassword="";
+                    this.cfpassword="";
                 }
             )
+        }
+        }else{
+            axios.post("http://192.168.137.173:8888/bank/userinfo/update",RegisterD).then(
+                res=>{
+                    alert("修改成功");
+                    RegisterD.name="";
+                    RegisterD.password="";
+                    RegisterD.email="";
+                    RegisterD.phoneNumber="";
+                    RegisterD.sex="";
+                    RegisterD.address="";
+                    RegisterD.profession="";
+                    this.oldpassword="";
+                    this.cfpassword="";
+                }
+            )
+        }
         }
 }
     }

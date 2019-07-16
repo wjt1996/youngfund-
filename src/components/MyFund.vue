@@ -38,13 +38,14 @@
             </div>
           </div>
           <div class="am-form-group">
-            <label for="user-phone" class="col-sm-3 am-form-label">出售基金</label>
+            <label for="user-phone" class="col-sm-3 am-form-label">取出基金</label>
             <div class="col-sm-9">
               <input type="email" id="fund-money" v-on:click="setBEmpty" v-model="fundMoneyS" value="">
             </div>
           </div>
              <button type="button"  class="btn btn-primary" v-on:click="buy" data-dismiss="modal">购买</button>
-             <button type="button"  class="btn btn-primary" v-on:click="sale" data-dismiss="modal">出售</button>
+             <button type="button"  class="btn btn-primary" v-on:click="sale" data-dismiss="modal">取出</button>
+             <button type="button"  class="btn btn-primary" v-on:click="deleteF" data-dismiss="modal">全部取出</button>
              <button type="button"  class="btn btn-default" data-dismiss="modal">关闭</button>
 
         </form>
@@ -99,7 +100,6 @@ export default {
         axios.post("http://192.168.137.173:8888/bank/userfund/selectall",this.uid).then(
             res=>{
                 var Info=res.data;
-                console.log(Info);
                 this.tableData=Info;
                 });
                 
@@ -110,36 +110,53 @@ export default {
             document.getElementById("modal-814974").click();
         },
         buy:function(){
-            if(this.fundid==0){alert("请选择基金")}
-            else if(this.fundMoneyB==""){alert("请输入购买金额");}
+            if(this.fundMoneyB==""){alert("请输入购买金额");}
             else{
                 this.uid.fundId=this.fundid;
                 this.uid.fundMoney=this.fundMoneyB;
+                console.log(this.uid);
                 axios.post("http://192.168.137.173:8888/bank/userfund/updateadd",this.uid).then(res=>{
-                    console.log(res);
                     if(res.data.flag==false){alert("存款不足，购买失败");}
                     else{alert("购买成功！！！");}
                 })
-                console.log(this.uid);
                 this.fundMoneyB="";
                 this.fundMoney="";
+                axios.post("http://192.168.137.173:8888/bank/userfund/selectall",this.uid).then(
+            res=>{
+                var Info=res.data;
+                this.tableData=Info;
+                });
             }
         },
         sale:function(){
-            if(this.fundid==0){alert("请选择基金");}
-            else if(this.fundMoneyS==""){alert("请输入出售金额");}
+            if(this.fundMoneyS==""){alert("请输入取出金额");}
             else{
                 this.uid.fundId=this.fundid;
                 this.uid.fundMoney=this.fundMoneyS;
                 axios.post("http://192.168.137.173:8888/bank/userfund/updatecut",this.uid).then(res=>{
-                    console.log(res);
-                    if(res.data.flag==false){alert("资产不足，出售失败");}
-                    else{alert("出售成功！！！");}
-                })
-                console.log(this.uid);
+                    if(res.data.flag==false){alert("资产不足，取出失败");}
+                    else{alert("取出成功！！！");}
+                });
                 this.fundMoneyS="";
                 this.fundMoney="";
+                axios.post("http://192.168.137.173:8888/bank/userfund/selectall",this.uid).then(
+            res=>{
+                var Info=res.data;
+                this.tableData=Info;
+                });
             }
+        },
+        deleteF:function(){
+            this.uid.fundId=this.fundid;
+            axios.post("http://192.168.137.173:8888/bank/userfund/fundsale",this.uid).then(res=>{
+                    if(res.data.flag==false){alert("取出失败");}
+                    else{alert("取出成功！！！");}
+                });
+                axios.post("http://192.168.137.173:8888/bank/userfund/selectall",this.uid).then(
+            res=>{
+                var Info=res.data;
+                this.tableData=Info;
+                });
         },
         setSEmpty:function(){
             this.fundMoneyS="";

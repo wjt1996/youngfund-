@@ -86,7 +86,6 @@ export default {
         axios.post("http://192.168.137.173:8888/bank/userinfo/select",this.uid).then(
             res=>{
                 var Info=res.data;
-                console.log(Info);
                 this.username=Info.userName;
                 this.truename=Info.name;
                 this.email=Info.email;
