@@ -1,5 +1,5 @@
 <template>
-  <div class="layout">
+  <div class="layout col-md-12.column.ui-sortable" style="height:100%">
     <header class="am-topbar admin-header">
   <div class="am-topbar-brand">
     <strong>青春基金</strong> <small>用户系统</small>
@@ -10,13 +10,15 @@
 
 </header>
 
-<div class="am-cf admin-main">
+<div class="am-cf admin-main col-md-12.column.ui-sortable">
   <!-- sidebar start -->
-  <div class="admin-sidebar">
+  <div class="container">
+	<div class="row clearfix">
+  <div class="admin-content col-md-4 column">
     <div class="am-panel am-panel-default admin-sidebar-panel">
       <div class="am-panel-bd">
         <p><span class="am-icon-bookmark"></span> 用户</p>
-        <img src="../assets/userPic.jpg">
+        <img style="width:60%;height:60%;" src="../assets/userPic.jpg">
       </div>
     </div>
     <ul class="am-list admin-sidebar-list">
@@ -29,8 +31,10 @@
   <!-- sidebar end -->
 
   <!-- content start -->
-  <div class="admin-content">
+  <div class="col-md-8 column" style="height:405px;">
     <component :is="tab"></component>
+  </div>
+	</div>
   </div>
   <!-- content end -->
 

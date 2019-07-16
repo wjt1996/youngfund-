@@ -1,9 +1,6 @@
 <template>
             
           <form action="" id="form">
-            <div id="logo2">
-                <img src="../assets/CZBANK2logo.jpg">
-            </div>
             <div id="login">
             <div class="col-sm-12 col-md-4 col-md-push-4">
                 <form class="am-form am-form-horizontal">

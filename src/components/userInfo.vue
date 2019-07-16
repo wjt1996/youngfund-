@@ -1,5 +1,5 @@
 <template>
-    <div class="admin-content">
+    <div class="admin-content" style="overflow-y:scroll; white-space:nowrap;">
     <div class="am-cf am-padding">
       <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">个人资料</strong> / <small>Personal information</small></div>
     </div>
