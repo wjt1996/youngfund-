@@ -68,15 +68,15 @@ export default {
     name:"userInfo",
     data(){
         return{
-            username:"xiaohong123",
-            truename:"小红",
-            email:"123456@qq.com",
-            phonenumber:"12345678901",
-            registerdate:"2019-07-12",
-            deposit:"10000",
-            sex:"女",
-            address:"浙江杭州XXXXXX",
-            profession:"护士",
+            username:"",
+            truename:"",
+            email:"",
+            phonenumber:"",
+            registerdate:"",
+            deposit:"",
+            sex:"",
+            address:"",
+            profession:"",
             uid:{'userId':0}
         }
     },

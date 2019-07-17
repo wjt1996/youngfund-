@@ -124,7 +124,7 @@ export default {
         if(this.register.password!=""){
             if(this.Password!=this.oldpassword){alert("原密码错误，修改失败");}
             else if(RegisterD.password!=this.cfpassword){alert("密码确认错误，请重新输入");}
-            else if(Tag){
+            else {
             axios.post("http://192.168.137.173:8888/bank/userinfo/update",RegisterD).then(
                 res=>{
                     alert("修改成功");

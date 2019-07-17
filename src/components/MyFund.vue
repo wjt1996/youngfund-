@@ -110,22 +110,24 @@ export default {
             document.getElementById("modal-814974").click();
         },
         buy:function(){
+            
             if(this.fundMoneyB==""){alert("请输入购买金额");}
             else{
+                
                 this.uid.fundId=this.fundid;
                 this.uid.fundMoney=this.fundMoneyB;
-                console.log(this.uid);
                 axios.post("http://192.168.137.173:8888/bank/userfund/updateadd",this.uid).then(res=>{
                     if(res.data.flag==false){alert("存款不足，购买失败");}
                     else{alert("购买成功！！！");}
-                })
-                this.fundMoneyB="";
-                this.fundMoney="";
-                axios.post("http://192.168.137.173:8888/bank/userfund/selectall",this.uid).then(
+                }).then(res=>{
+                    axios.post("http://192.168.137.173:8888/bank/userfund/selectall",this.uid).then(
             res=>{
                 var Info=res.data;
                 this.tableData=Info;
                 });
+                });
+                this.fundMoneyB="";
+                
             }
         },
         sale:function(){
@@ -136,14 +138,15 @@ export default {
                 axios.post("http://192.168.137.173:8888/bank/userfund/updatecut",this.uid).then(res=>{
                     if(res.data.flag==false){alert("资产不足，取出失败");}
                     else{alert("取出成功！！！");}
-                });
-                this.fundMoneyS="";
-                this.fundMoney="";
-                axios.post("http://192.168.137.173:8888/bank/userfund/selectall",this.uid).then(
+                }).then(res=>{
+                    axios.post("http://192.168.137.173:8888/bank/userfund/selectall",this.uid).then(
             res=>{
                 var Info=res.data;
                 this.tableData=Info;
                 });
+                });
+                this.fundMoneyS="";
+                
             }
         },
         deleteF:function(){
@@ -151,12 +154,14 @@ export default {
             axios.post("http://192.168.137.173:8888/bank/userfund/fundsale",this.uid).then(res=>{
                     if(res.data.flag==false){alert("取出失败");}
                     else{alert("取出成功！！！");}
-                });
-                axios.post("http://192.168.137.173:8888/bank/userfund/selectall",this.uid).then(
+                }).then(res=>{
+                    axios.post("http://192.168.137.173:8888/bank/userfund/selectall",this.uid).then(
             res=>{
                 var Info=res.data;
                 this.tableData=Info;
                 });
+                });
+                
         },
         setSEmpty:function(){
             this.fundMoneyS="";

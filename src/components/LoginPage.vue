@@ -1,30 +1,22 @@
 <template>
-            
-          <form action="" id="form">
-            <div id="login">
-            <div class="col-sm-12 col-md-4 col-md-push-4">
-                <form class="am-form am-form-horizontal">
-                <div class="am-form-group">
-                    <label for="user-name" class="col-sm-3 am-form-label">账号</label>
-                    <div class="col-sm-9">
-                        <input v-model="login.logName" type="text" name="" id="" value="" />
-                    </div>
-                </div>
-
-                <div class="am-form-group">
-                    <label for="user-email" class="col-sm-3 am-form-label">密码</label>
-                    <div class="col-sm-9">
-                        <input v-model="login.password" type="password" name="" id="" value="" />
-                    </div>
-                </div>
-                </form>
-            </div> 
-            </div>
+          <div class="container" style="height:90%;">
+	        <div class="row clearfix">
+            <div class="col-md-12 column">
+			<div class="jumbotron" :style="note">
+        <form role="form">
+				<div class="form-group">
+					 <label for="exampleInputEmail1">账号</label><input class="form-control" v-model="login.logName" type="text" name="" id="" value="" />
+				</div>
+				<div class="form-group">
+					 <label for="exampleInputPassword1">Password</label><input type="password" class="form-control" v-model="login.password" name="" id="" value=""/>
+				</div>
+        
 <div class="container">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
+      <button >
 			 <a id="modal-814974" href="#modal-container-814974" role="button" class="btn" data-toggle="modal">注册账号</a>
-			
+      </button>
 			<div class="modal fade" id="modal-container-814974" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -117,9 +109,13 @@
 		</div>
 	</div>
 </div>
-            <button v-on:click="dl" type="button" class="btn btn-default">登录</button>
+            <button v-on:click="dl" type="button" class="btn btn-default"><a>登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</a></button>
         </form>
-
+			</div>
+		</div>
+          
+	        </div>
+          </div>
 </template>
 
 <script>
@@ -129,19 +125,25 @@ import qs from 'qs'
     name: "table-main",
     data() {
       return {
+        note: {
+          backgroundImage: "url(" + require("../assets/background2.jpg") + ")",
+          backgroundRepeat: "no-repeat",
+          backgroundSize:"cover",
+          marginTop: "5px",
+        },
         login:[{logName:"",
                 password:""}],
         register:{
-            userName:"",
-            password:"",
-            name:"",
-            email:"",
-            phoneNumber:"",
+            userName:"xiaodingdang",
+            password:"123456",
+            name:"小叮当",
+            email:"1194228431@qq.com",
+            phoneNumber:"15555555555",
             sex:"",
-            address:"",
-            profession:"",
+            address:"杭州",
+            profession:"销售",
         },
-        cfpassword:""
+        cfpassword:"123456"
       }
     },
     methods:{
@@ -157,6 +159,7 @@ import qs from 'qs'
             {'logName':Name,'password':Password}
             ).then((res)=>{
                 var Result=res.data;
+                console.log(Result);
                 if(Result.flag){
                         alert("登录成功");
                         localStorage.setItem("userId",JSON.stringify(Result.data.userId));
@@ -194,7 +197,7 @@ import qs from 'qs'
 
 </script>
 
-<style>
+<style scoped>
 #logo2 {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

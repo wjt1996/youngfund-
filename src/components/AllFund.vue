@@ -17,7 +17,7 @@
                         </div>
                         </div>
         <div class="am-cf am-padding">
-            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">市场热度</strong> / <small>Market Heat</small></div>
+            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">市场热度</strong> / <small>Market Activity</small></div>
         </div>
 						<div style="height: 200px;">
                         <div class="admin-content" style="overflow-y:scroll; white-space:nowrap;">
@@ -177,10 +177,8 @@ export default {
                     console.log(res);
                     if(res.data.flag==false){alert(res.data.message);}
                     else{alert("购买成功！！！");}
-                })
-                this.fundMoneyB="";
-                this.fundMoney="";
-                this.$axios("http://192.168.137.173:8888/bank/fundinfo/selectallfund").then(
+                }).then(res=>{
+                    this.$axios("http://192.168.137.173:8888/bank/fundinfo/selectallfund").then(
             res=>{
                 var Info=res.data;
                 console.log(Info);
@@ -192,6 +190,9 @@ export default {
                 console.log(Info);
                 this.fundDataOrder=Info;
                 });
+                });
+                this.fundMoneyB="";
+                
             }
         },
 
